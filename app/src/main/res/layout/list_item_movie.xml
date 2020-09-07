@@ -38,13 +38,13 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
                 <TextView
-                    android:id="@+id/txtRating"
+                    android:id="@+id/txtYear"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Rating" />
 
                 <TextView
-                    android:id="@+id/txtGenre"
+                    android:id="@+id/txtType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Genre" />

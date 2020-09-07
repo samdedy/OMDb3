@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import id.sam.omdb3.adapter.AdapterListSimple;
-import id.sam.omdb3.model.TitleMovie;
+import id.sam.omdb3.model.SearchList;
 import id.sam.omdb3.service.APIClient;
 import id.sam.omdb3.service.APIInterfacesRest;
 import retrofit2.Call;
@@ -36,8 +37,12 @@ public class MainActivity extends AppCompatActivity {
         txtCari = findViewById(R.id.txtCari);
         rvMovie = findViewById(R.id.rvMovie);
         btnCari = findViewById(R.id.btnCari);
-        callMovie("naruto");
-
+        btnCari.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callMovie(txtCari.getText().toString());
+            }
+        });
     }
 
     APIInterfacesRest apiInterface; //deklarasi variable
@@ -48,21 +53,21 @@ public class MainActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(MainActivity.this); //inisialisasi progres dialog
         progressDialog.setTitle("Loading");
         progressDialog.show();
-        Call<TitleMovie> call3 = apiInterface.getTitleMovie(title,"33e0eb02");//pemanggilan funsion api
-        call3.enqueue(new Callback<TitleMovie>() {
+        Call<SearchList> call3 = apiInterface.getSearch(title,"33e0eb02");//pemanggilan funsion api
+        call3.enqueue(new Callback<SearchList>() {
             @Override
-            public void onResponse(Call<TitleMovie> call, Response<TitleMovie> response) {
+            public void onResponse(Call<SearchList> call, Response<SearchList> response) {
                 progressDialog.dismiss();
-                TitleMovie titleMovie = response.body();
+                SearchList searchList = response.body();
                 //Toast.makeText(LoginActivity.this,userList.getToken().toString(),Toast.LENGTH_LONG).show();
-                if (titleMovie !=null) {
+                if (searchList !=null) {
 
                     //     txtKota.setText(dataWeather.getName());
                     //     txtTemperature.setText(new DecimalFormat("##.##").format(dataWeather.getMain().getTemp()-273.15));
-                    List<TitleMovie> titleMovies = new ArrayList<>(); // merubah data objeck ke list(araray)
-                    titleMovies.add(titleMovie);
+//                    List<TitleMovie> titleMovies = new ArrayList<>(); // merubah data objeck ke list(araray)
+////                    titleMovies.add(titleMovie);
 
-                    AdapterListSimple adapter = new AdapterListSimple(MainActivity.this, titleMovies);
+                    AdapterListSimple adapter = new AdapterListSimple(MainActivity.this, searchList.getSearch());
 
 
                     rvMovie.setLayoutManager(new LinearLayoutManager(MainActivity.this));
@@ -80,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<TitleMovie> call, Throwable t) {
+            public void onFailure(Call<SearchList> call, Throwable t) {
                 progressDialog.dismiss();
                 Toast.makeText(getApplicationContext(),"Maaf koneksi bermasalah",Toast.LENGTH_LONG).show();
                 call.cancel();

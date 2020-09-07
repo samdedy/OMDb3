@@ -16,14 +16,14 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import id.sam.omdb3.R;
-import id.sam.omdb3.model.TitleMovie;
+import id.sam.omdb3.model.Search;
 
 public class AdapterListSimple extends RecyclerView.Adapter<AdapterListSimple.ViewHolder> {
 
-    List<TitleMovie> data;
+    List<Search> data;
     Context context;
 
-    public AdapterListSimple(Context context, List<TitleMovie> data){
+    public AdapterListSimple(Context context, List<Search> data){
         this.data = data;
         this.context = context;
     }
@@ -44,9 +44,9 @@ public class AdapterListSimple extends RecyclerView.Adapter<AdapterListSimple.Vi
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
         holder.txtTitle.setText(data.get(position).getTitle());
-        holder.txtRating.setText(data.get(position).getRatings().get(0).getValue());
-        holder.txtGenre.setText(data.get(position).getGenre());
-        holder.txtDirectedBy.setText(data.get(position).getDirector());
+        holder.txtRating.setText(data.get(position).getYear());
+        holder.txtGenre.setText(data.get(position).getType());
+        holder.txtDirectedBy.setText(data.get(position).getImdbID());
 
         String image = data.get(position).getPoster();
         Picasso.get().load(image).into(holder.imgPoster);
@@ -68,8 +68,8 @@ public class AdapterListSimple extends RecyclerView.Adapter<AdapterListSimple.Vi
 
             imgPoster = v.findViewById(R.id.imgPoster);
             txtTitle = v.findViewById(R.id.txtTitle);
-            txtRating = v.findViewById(R.id.txtRating);
-            txtGenre = v.findViewById(R.id.txtGenre);
+            txtRating = v.findViewById(R.id.txtYear);
+            txtGenre = v.findViewById(R.id.txtType);
             txtDirectedBy = v.findViewById(R.id.txtDirectedBy);
             parentLayout = v.findViewById(R.id.cardViewListItemMovie);
         }

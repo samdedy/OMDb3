@@ -1,5 +1,6 @@
 package id.sam.omdb3.service;
 
+import id.sam.omdb3.model.SearchList;
 import id.sam.omdb3.model.TitleMovie;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -10,6 +11,8 @@ public interface APIInterfacesRest {
     @GET("/")
     Call<TitleMovie> getTitleMovie(@Query("t") String q, @Query("apikey") String appid);
 
+    @GET("/")
+    Call<SearchList> getSearch(@Query("s") String q, @Query("apikey") String appid);
 /*
     @GET("weather")
     Call<WeatherModel> getWeatherBasedLocation(@Query("lat") Double lat, @Query("lon") Double lon, @Query("appid") String appid);
